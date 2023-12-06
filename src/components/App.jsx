@@ -1,16 +1,76 @@
-export const App = () => {
-  return (
-    <div
-      style={{
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 40,
-        color: '#010101',
-      }}
-    >
-      React homework goit-react-hw-02-phonebook
-    </div>
-  );
-};
+import React, { Component } from 'react';
+import { nanoid } from 'nanoid';
+import { ContactForm } from './ContactForm/ContactForm';
+import { Section } from './Section/Section';
+import { Filter } from './Filter/Filter';
+import { ContactList } from './ContactList/ContactList';
+
+export class App extends Component {
+  state = {
+    contacts: [
+      { id: 'id-1', name: 'Rosie', number: '459-12-56' },
+      { id: 'id-2', name: 'Hermion', number: '443-89-12' },
+      { id: 'id-3', name: 'Eden', number: '645-17-79' },
+      { id: 'id-4', name: 'Annie', number: '227-91-26' },
+    ],
+
+    filter: '',
+  };
+
+  handleFilterChange = event => {
+    this.setState({ filter: event.target.value });
+  };
+
+  contactFilter = () => {
+    return this.state.contacts.filter(contact =>
+      contact.name.toLowerCase().includes(this.state.filter.toLowerCase())
+    );
+  };
+
+  addNewContact = contactProps => {
+    this.setState(prev => ({
+      contacts: [...prev.contacts, { id: nanoid(), ...contactProps }],
+    }));
+  };
+
+  deleteContact = id => {
+    this.setState(prev => ({
+      contacts: prev.contacts.filter(contact => contact.id !== id),
+    }));
+  };
+
+  checkName = name => {
+    return this.state.contacts.some(contact => {
+      return contact.name.toLowerCase() === name.toLowerCase();
+    });
+  };
+
+  // render page
+  render() {
+    return (
+      <>
+        <Section title="Phonebook">
+          <ContactForm
+            addNewContact={this.addNewContact}
+            checkName={this.checkName}
+          />
+        </Section>
+        <Section title="Contacts">
+          <Filter
+            filter={this.state.filter}
+            handleFilterChange={this.handleFilterChange}
+          />
+          <ContactList
+            id={this.state.id}
+            name={this.state.name}
+            number={this.state.number}
+            contactFilter={this.contactFilter}
+            deleteContact={this.deleteContact}
+          />
+        </Section>
+      </>
+    );
+  }
+}
+
+export default App;
