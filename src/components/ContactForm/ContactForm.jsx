@@ -1,6 +1,6 @@
 import React from 'react';
 import { Component } from 'react';
-import css from './ContactForm.module.css';
+import s from './ContactForm.module.css';
 
 export class ContactForm extends Component {
   state = {
@@ -16,7 +16,7 @@ export class ContactForm extends Component {
     event.preventDefault();
     if (this.state.name && this.state.number) {
       if (this.props.checkName(this.state.name)) {
-        alert(`${this.state.name} already in contact`);
+        alert(`${this.state.name} is already recorded in the contacts book`);
       } else {
         this.props.addNewContact(this.state);
         this.reset();
@@ -32,31 +32,33 @@ export class ContactForm extends Component {
   };
 
   render() {
-    console.log('name', this.state.name);
-    console.log('num', this.state.number);
     return (
       <form autoComplete="off" onSubmit={this.handleSubmit}>
         <label htmlFor="name">
           <input
-            className={css.input}
+            className={s.input}
             value={this.state.name}
             onChange={this.handleChange}
             type="text"
             name="name"
+            placeholder="Name"
+            maxLength="16"
             required
           />
         </label>
         <label htmlFor="number">
           <input
-            className={css.input}
+            className={s.input}
             value={this.state.number}
             onChange={this.handleChange}
             type="tel"
             name="number"
+            placeholder="Phone number"
             required
+            maxLength="10"
           />
         </label>
-        <button type="submit" className={css.button_contact}>
+        <button type="submit" className={s.button}>
           Add contact
         </button>
       </form>

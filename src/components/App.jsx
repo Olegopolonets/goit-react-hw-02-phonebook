@@ -17,16 +17,6 @@ export class App extends Component {
     filter: '',
   };
 
-  handleFilterChange = event => {
-    this.setState({ filter: event.target.value });
-  };
-
-  contactFilter = () => {
-    return this.state.contacts.filter(contact =>
-      contact.name.toLowerCase().includes(this.state.filter.toLowerCase())
-    );
-  };
-
   addNewContact = contactProps => {
     this.setState(prev => ({
       contacts: [...prev.contacts, { id: nanoid(), ...contactProps }],
@@ -45,7 +35,16 @@ export class App extends Component {
     });
   };
 
-  // render page
+  handleFilter = event => {
+    this.setState({ filter: event.target.value });
+  };
+
+  contactFilter = () => {
+    return this.state.contacts.filter(contact =>
+      contact.name.toLowerCase().includes(this.state.filter.toLowerCase())
+    );
+  };
+
   render() {
     return (
       <>
@@ -56,10 +55,7 @@ export class App extends Component {
           />
         </Section>
         <Section title="Contacts">
-          <Filter
-            filter={this.state.filter}
-            handleFilterChange={this.handleFilterChange}
-          />
+          <Filter filter={this.state.filter} handleFilter={this.handleFilter} />
           <ContactList
             id={this.state.id}
             name={this.state.name}

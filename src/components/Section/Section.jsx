@@ -1,11 +1,13 @@
-import React from "react";
-import css from './Section.module.css';
+import React from 'react';
+import s from './Section.module.css';
 
 export const Section = ({ title, children }) => {
   return (
     <>
-      <p className={css.title}>{title}</p>
-      {children}
+      <section className={s.section}>
+        <p className={s.title}>{title}</p>
+        {children}
+      </section>
     </>
   );
 };

@@ -1,16 +1,18 @@
 import React from 'react';
-import css from './ContactList.module.css';
+import s from './ContactList.module.css';
 
 export const ContactList = ({ contactFilter, deleteContact }) => {
   return (
-    <ul className={css.contact_list}>
+    <ul className={s.contactList}>
       {contactFilter().map(({ id, name, number }) => {
         return (
-          <li className={css.contact_item} key={id}>
-            {name}: {number}
+          <li className={s.contactItem} key={id}>
+            <p className={s.contactText}>
+              <b> {name} </b>: <i> {number}</i>
+            </p>
             <button
               type="button"
-              className={css.delete_button}
+              className={s.deleteBtn}
               onClick={() => deleteContact(id)}
             >
               Delete
